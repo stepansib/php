@@ -9,6 +9,9 @@ variables:
 services:
     - docker:18.09.7-dind
 
+stages:
+    - Build and push
+
 Build and push:
     stage: Build and push
     script:
