@@ -9,7 +9,8 @@ variables:
 services:
     - docker:18.09.7-dind
 
-Build and release:
+Build and push:
+    stage: Build and push
     script:
         - docker pull $RELEASE_IMAGE || true
         - docker build -t $RELEASE_IMAGE --cache-from $RELEASE_IMAGE .
