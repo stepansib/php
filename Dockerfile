@@ -41,10 +41,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   build-essential \
   openssh-client
 
-# Install Codeception
-RUN curl -LsS https://codeception.com/codecept.phar -o /usr/local/bin/codecept \
-  && chmod a+x /usr/local/bin/codecept
-
 # Configure PHP extensions
 RUN docker-php-ext-configure intl \
   && docker-php-ext-configure pcntl \
@@ -78,6 +74,10 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN wget https://phar.phpunit.de/phpunit.phar \
   && chmod +x phpunit.phar \
   && mv phpunit.phar /usr/local/bin/phpunit
+
+# Install Codeception
+RUN curl -LsS https://codeception.com/codecept.phar -o /usr/local/bin/codecept \
+  && chmod a+x /usr/local/bin/codecept
 
 # Configure PHP and FPM
 COPY ./php.ini /usr/local/etc/php/
