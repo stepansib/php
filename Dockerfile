@@ -76,7 +76,7 @@ RUN wget https://phar.phpunit.de/phpunit.phar \
   && mv phpunit.phar /usr/local/bin/phpunit
 
 # Install Codeception
-RUN curl -LsS http://codeception.com/php5/codecept.phar -o /usr/local/bin/codecept \
+RUN curl -LsS https://codeception.com/codecept.phar -o /usr/local/bin/codecept \
   && chmod a+x /usr/local/bin/codecept
 
 # Configure PHP and FPM
