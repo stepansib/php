@@ -9,19 +9,7 @@ variables:
 services:
     - docker:18.09.7-dind
 
-cache:
-    key: "$CI_COMMIT_REF_SLUG"
-    paths:
-        - image/
-
-stages:
-    - Build
-    - Test
-    - Release
-#    - Cleanup
-
 Build and release:
-    stage: Build
     script:
         - docker pull $RELEASE_IMAGE || true
         - docker build -t $RELEASE_IMAGE --cache-from $RELEASE_IMAGE .
@@ -29,4 +17,4 @@ Build and release:
     variables:
         GIT_STRATEGY: clone
     tags:
-        - dind
+        - docker-in-docker
