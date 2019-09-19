@@ -95,15 +95,6 @@ RUN curl -fsSLO "$SUPERCRONIC_URL" \
  && mv "$SUPERCRONIC" "/usr/local/bin/${SUPERCRONIC}" \
  && ln -s "/usr/local/bin/${SUPERCRONIC}" /usr/local/bin/supercronic
 
-# Create www-data sudoer user
-RUN adduser www-data sudo \
-  && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
-  && usermod -u 1000 www-data \
-  && sudo chown -R www-data:www-data /var/www \
-  && sudo chmod -R 774 /var/www
-
-USER www-data
-
 # Speed up composer for www-data user
 RUN composer global require hirak/prestissimo
 
