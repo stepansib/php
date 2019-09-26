@@ -105,4 +105,10 @@ RUN curl -fsSLO "$SUPERCRONIC_URL" \
 # Speed up composer for www-data user
 RUN composer global require hirak/prestissimo
 
+RUN usermod -a -G www-data www-data \
+  && usermod -a -G sudo www-data \
+  && chgrp -R www-data /var/www \
+  && chmod -R g+w /var/www
+
+USER www-data
 WORKDIR "/var/www/backend"
