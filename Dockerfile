@@ -84,8 +84,8 @@ RUN curl -LsS https://codeception.com/codecept.phar -o /usr/local/bin/codecept \
 # Configure PHP and FPM
 COPY ./php.ini /usr/local/etc/php/
 RUN sed -i 's/listen = 127.0.0.1:9000/listen = 9000/' /usr/local/etc/php-fpm.d/www.conf
-RUN sed -i 's/user = www-data/user = root/' /usr/local/etc/php-fpm.d/www.conf
-RUN sed -i 's/group = www-data/group = root/' /usr/local/etc/php-fpm.d/www.conf
+#RUN sed -i 's/user = www-data/user = root/' /usr/local/etc/php-fpm.d/www.conf
+#RUN sed -i 's/group = www-data/group = root/' /usr/local/etc/php-fpm.d/www.conf
 
 # Change app and system timezone
 RUN sed -i 's,\Etc/UTC,'"$APP_TIMEZONE"',' /usr/local/etc/php/php.ini
@@ -106,5 +106,3 @@ RUN curl -fsSLO "$SUPERCRONIC_URL" \
 RUN composer global require hirak/prestissimo
 
 WORKDIR "/var/www/backend"
-
-RUN cat /usr/local/etc/php/php.ini
