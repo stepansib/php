@@ -1,6 +1,8 @@
 FROM php:7.1-fpm
 MAINTAINER Stepan Yudin <stepan.sib@gmail.com>
 
+ENV APP_TIMEZONE=Europe/Moscow
+
 # Install node & npm
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 
@@ -84,6 +86,10 @@ COPY ./php.ini /usr/local/etc/php/
 COPY php-fpm.conf /etc/php-fpm.conf
 RUN sed -i 's/listen = 127.0.0.1:9000/listen = 9000/' /usr/local/etc/php-fpm.d/www.conf
 
+# Change app and system timezone
+RUN sed -i 's,\Etc/UTC,'"$APP_TIMEZONE"',' /usr/local/etc/php/php.ini
+RUN cp /usr/share/zoneinfo/$APP_TIMEZONE /etc/localtime && echo $APP_TIMEZONE > /etc/timezone
+
 # Install Supercronic
 ENV SUPERCRONIC_URL=https://github.com/aptible/supercronic/releases/download/v0.1.6/supercronic-linux-amd64 \
     SUPERCRONIC=supercronic-linux-amd64 \
@@ -99,3 +105,5 @@ RUN curl -fsSLO "$SUPERCRONIC_URL" \
 RUN composer global require hirak/prestissimo
 
 WORKDIR "/var/www/backend"
+
+RUN cat /usr/local/etc/php/php.ini
