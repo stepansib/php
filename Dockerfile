@@ -102,12 +102,12 @@ RUN curl -fsSLO "$SUPERCRONIC_URL" \
  && mv "$SUPERCRONIC" "/usr/local/bin/${SUPERCRONIC}" \
  && ln -s "/usr/local/bin/${SUPERCRONIC}" /usr/local/bin/supercronic
 
+# Fix www-data permissions and create work directory
 RUN usermod -a -G www-data www-data \
   && usermod -a -G sudo www-data \
   && chgrp -R www-data /var/www \
-  && chmod -R g+w /var/www
-
-RUN mkdir -p /var/www/backend \
+  && chmod -R g+w /var/www \
+  && mkdir -p /var/www/backend \
   && chown www-data:www-data /var/www/backend
 
 USER www-data
