@@ -84,8 +84,6 @@ RUN curl -LsS https://codeception.com/codecept.phar -o /usr/local/bin/codecept \
 # Configure PHP and FPM
 COPY ./php.ini /usr/local/etc/php/
 RUN sed -i 's/listen = 127.0.0.1:9000/listen = 9000/' /usr/local/etc/php-fpm.d/www.conf
-#RUN sed -i 's/user = www-data/user = root/' /usr/local/etc/php-fpm.d/www.conf
-#RUN sed -i 's/group = www-data/group = root/' /usr/local/etc/php-fpm.d/www.conf
 
 # Change app and system timezone
 RUN sed -i 's,\Etc/UTC,'"$APP_TIMEZONE"',' /usr/local/etc/php/php.ini
@@ -103,8 +101,8 @@ RUN curl -fsSLO "$SUPERCRONIC_URL" \
  && ln -s "/usr/local/bin/${SUPERCRONIC}" /usr/local/bin/supercronic
 
 # Fix www-data permissions and create work directory
-RUN usermod -a -G www-data www-data \
-  && usermod -a -G sudo www-data \
+RUN usermod -a -G sudo www-data \
+  && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
   && chgrp -R www-data /var/www \
   && chmod -R g+w /var/www \
   && mkdir -p /var/www/backend \
