@@ -107,7 +107,12 @@ RUN usermod -a -G www-data www-data \
   && chgrp -R www-data /var/www \
   && chmod -R g+w /var/www
 
+RUN mkdir -p /var/www/backend \
+  && chown www-data:www-data /var/www/backend
+
 USER www-data
+
+WORKDIR /var/www/backend
 
 # Speed up composer for www-data user
 RUN composer global require hirak/prestissimo
