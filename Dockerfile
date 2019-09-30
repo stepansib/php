@@ -112,5 +112,10 @@ USER www-data
 
 WORKDIR /var/www/backend
 
+# Install dropbox uploader
+RUN cd ~ && curl "https://raw.githubusercontent.com/andreafabrizi/Dropbox-Uploader/master/dropbox_uploader.sh" -o dropbox_uploader.sh \
+  && chmod +x dropbox_uploader.sh \
+  && touch .dropbox_uploader
+
 # Speed up composer for www-data user
 RUN composer global require hirak/prestissimo
