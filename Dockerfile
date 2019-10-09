@@ -7,8 +7,8 @@ ENV APP_TIMEZONE=Europe/Moscow
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 
 # Add repository for PHP MSSQL extension
-RUN sudo curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
-  && sudo curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
+  && curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
 
 # Install libs
 RUN ACCEPT_EULA=Y apt-get update && apt-get install -y --no-install-recommends \
