@@ -7,7 +7,7 @@ ENV APP_TIMEZONE=Europe/Moscow
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 
 # Install libs
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN ACCEPT_EULA=Y apt-get update && apt-get install -y --no-install-recommends \
   zlib1g-dev \
   libicu-dev g++ \
   libmcrypt-dev \
@@ -38,10 +38,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   procps \
   dos2unix \
   tzdata \
-  freetds-dev \
   nodejs \
   build-essential \
-  openssh-client
+  openssh-client \
+  msodbcsql17 \
+  mssql-tools \
+  unixodbc-dev \
+  openssl
 
 # Configure PHP extensions
 RUN docker-php-ext-configure intl \
@@ -64,10 +67,6 @@ RUN docker-php-ext-install \
   zip \
   tidy \
   bcmath
-
-#Install freetds & MSSQL driver
-RUN docker-php-ext-configure pdo_dblib --with-libdir=/lib/x86_64-linux-gnu/ \
-  && docker-php-ext-install -j$(nproc) pdo_dblib
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -107,6 +106,14 @@ RUN usermod -a -G sudo www-data \
   && chmod -R g+w /var/www \
   && mkdir -p /var/www/backend \
   && chown www-data:www-data /var/www/backend
+
+# Install php mssql extension
+RUN sudo curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
+  && sudo curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
+RUN pecl install sqlsrv pdo_sqlsrv \
+  && docker-php-ext-enable sqlsrv pdo_sqlsrv
+RUN sed -i 's,^\(MinProtocol[ ]*=\).*,\1'TLSv1.0',g' /etc/ssl/openssl.cnf \
+  && sed -i 's,^\(CipherString[ ]*=\).*,\1'DEFAULT@SECLEVEL=1',g' /etc/ssl/openssl.cnf
 
 USER www-data
 
