@@ -6,6 +6,10 @@ ENV APP_TIMEZONE=Europe/Moscow
 # Install node & npm
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 
+# Add repository for PHP MSSQL extension
+RUN sudo curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
+  && sudo curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
+
 # Install libs
 RUN ACCEPT_EULA=Y apt-get update && apt-get install -y --no-install-recommends \
   zlib1g-dev \
@@ -107,9 +111,7 @@ RUN usermod -a -G sudo www-data \
   && mkdir -p /var/www/backend \
   && chown www-data:www-data /var/www/backend
 
-# Install php mssql extension
-RUN sudo curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
-  && sudo curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
+# Install PHP MSSQL extension
 RUN pecl install sqlsrv pdo_sqlsrv \
   && docker-php-ext-enable sqlsrv pdo_sqlsrv
 RUN sed -i 's,^\(MinProtocol[ ]*=\).*,\1'TLSv1.0',g' /etc/ssl/openssl.cnf \
