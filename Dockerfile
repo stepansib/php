@@ -105,11 +105,12 @@ RUN curl -fsSLO "$SUPERCRONIC_URL" \
 
 # Fix www-data permissions and create work directory
 RUN usermod -a -G sudo www-data \
+  && usermod -u 1000 www-data \
   && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
   && chgrp -R www-data /var/www \
   && chmod -R g+w /var/www \
   && mkdir -p /var/www/backend \
-  && chown www-data:www-data /var/www/backend
+  && chown -R www-data:www-data /var/www/backend
 
 # Install PHP MSSQL extension
 RUN pecl install sqlsrv pdo_sqlsrv \
