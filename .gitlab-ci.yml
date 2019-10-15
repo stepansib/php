@@ -37,11 +37,3 @@ stages:
         - docker push $RELEASE_IMAGE:7.3
     tags:
         - docker-in-docker
-
-7.4 Build and push:
-    stage: Build and push
-    script:
-        - docker build -f Dockerfile.7_2 --build-arg BUILD_IMAGE=php:7.4-fpm -t $RELEASE_IMAGE:7.4 .
-        - docker push $RELEASE_IMAGE:7.4
-    tags:
-        - docker-in-docker
