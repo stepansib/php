@@ -38,7 +38,8 @@ RUN apt-get update && ACCEPT_EULA=Y apt-get install -y --no-install-recommends \
   tzdata \
   build-essential \
   openssh-client \
-  openssl
+  openssl \
+  libzip-dev
 
 # Install node & npm
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - \
