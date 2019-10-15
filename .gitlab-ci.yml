@@ -15,8 +15,7 @@ stages:
 Build and push:
     stage: Build and push
     script:
-        - docker pull $RELEASE_IMAGE || true
-        - docker build -t $RELEASE_IMAGE --cache-from $RELEASE_IMAGE .
+        - docker build -t $RELEASE_IMAGE .
         - docker push $RELEASE_IMAGE
     variables:
         GIT_STRATEGY: clone
