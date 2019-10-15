@@ -42,7 +42,7 @@ RUN apt-get update && ACCEPT_EULA=Y apt-get install -y --no-install-recommends \
 # Install node & npm
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - \
   && curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash - \
-  && sudo apt-get install -y nodejs npm
+  && sudo apt-get install -y nodejs
 
 # Configure PHP extensions
 RUN docker-php-ext-configure intl \
