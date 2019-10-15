@@ -6,7 +6,7 @@ ENV APP_TIMEZONE=Europe/Moscow
 
 # Install libs
 RUN apt-get update && ACCEPT_EULA=Y apt-get install -y --no-install-recommends \
-  libmcrypt \
+  libmcrypt-dev \
   zlib1g-dev \
   libicu-dev g++ \
   libfreetype6-dev \
