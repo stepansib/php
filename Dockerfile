@@ -1,4 +1,5 @@
-FROM php:7.1-fpm
+ARG BUILD_IMAGE=''
+FROM $BUILD_IMAGE
 MAINTAINER Stepan Yudin <stepan.sib@gmail.com>
 
 ENV APP_TIMEZONE=Europe/Moscow

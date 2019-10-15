@@ -1,7 +1,7 @@
 image: docker:stable
 
 variables:
-    GIT_STRATEGY: none
+    GIT_STRATEGY: clone
     DOCKER_HOST: tcp://docker:2375/
     DOCKER_DRIVER: overlay2
     RELEASE_IMAGE: $REGISTRY_HOST/$REGISTRY_IMAGE
@@ -12,12 +12,36 @@ services:
 stages:
     - Build and push
 
-Build and push:
+7.1 (latest) Build and push:
     stage: Build and push
     script:
-        - docker build -t $RELEASE_IMAGE .
-        - docker push $RELEASE_IMAGE
-    variables:
-        GIT_STRATEGY: clone
+        - docker build --build-arg BUILD_IMAGE=php:7.1-fpm -t $RELEASE_IMAGE:7.1 .
+        - docker push $RELEASE_IMAGE:7.1
+        - docker tag $RELEASE_IMAGE:7.1 $RELEASE_IMAGE:latest
+        - docker push $RELEASE_IMAGE:latest
+    tags:
+        - docker-in-docker
+
+7.2 Build and push:
+    stage: Build and push
+    script:
+        - docker build --build-arg BUILD_IMAGE=php:7.2-fpm -t $RELEASE_IMAGE:7.2 .
+        - docker push $RELEASE_IMAGE:7.2
+    tags:
+        - docker-in-docker
+
+7.3 Build and push:
+    stage: Build and push
+    script:
+        - docker build --build-arg BUILD_IMAGE=php:7.3-fpm -t $RELEASE_IMAGE:7.3 .
+        - docker push $RELEASE_IMAGE:7.3
+    tags:
+        - docker-in-docker
+
+7.4 Build and push:
+    stage: Build and push
+    script:
+        - docker build --build-arg BUILD_IMAGE=php:7.4-fpm -t $RELEASE_IMAGE:7.4 .
+        - docker push $RELEASE_IMAGE:7.4
     tags:
         - docker-in-docker
