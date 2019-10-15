@@ -8,7 +8,6 @@ ENV APP_TIMEZONE=Europe/Moscow
 RUN apt-get update && ACCEPT_EULA=Y apt-get install -y --no-install-recommends \
   zlib1g-dev \
   libicu-dev g++ \
-  libmcrypt-dev \
   libfreetype6-dev \
   libjpeg62-turbo-dev \
   libpng-dev \
@@ -45,6 +44,10 @@ RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - \
   && curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash - \
   && sudo apt-get install -y nodejs
 
+# Install PHP mcrypt extension
+RUN pecl install mcrypt-1.0.2
+RUN docker-php-ext-enable mcrypt
+
 # Configure PHP extensions
 RUN docker-php-ext-configure intl \
   && docker-php-ext-configure pcntl \
@@ -56,7 +59,6 @@ RUN docker-php-ext-install \
   curl \
   intl \
   pcntl \
-  mcrypt \
   gd \
   ldap \
   opcache \
