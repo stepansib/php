@@ -3,9 +3,6 @@ MAINTAINER Stepan Yudin <stepan.sib@gmail.com>
 
 ENV APP_TIMEZONE=Europe/Moscow
 
-# Install node & npm
-RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
-
 # Add repository for PHP MSSQL extension
 RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
   && curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
@@ -42,13 +39,17 @@ RUN apt-get update && ACCEPT_EULA=Y apt-get install -y --no-install-recommends \
   procps \
   dos2unix \
   tzdata \
-  nodejs \
   build-essential \
   openssh-client \
   msodbcsql17 \
   mssql-tools \
   unixodbc-dev \
   openssl
+
+# Install node & npm
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - \
+  && curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash - \
+  && sudo apt-get install -y nodejs npm
 
 # Configure PHP extensions
 RUN docker-php-ext-configure intl \
