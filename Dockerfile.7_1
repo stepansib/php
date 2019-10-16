@@ -44,8 +44,9 @@ RUN apt-get update && ACCEPT_EULA=Y apt-get install -y --no-install-recommends \
 # Install node
 RUN apt-get update \
     && apt-get upgrade -y \
-    && curl -sL https://deb.nodesource.com/setup_12.x | bash - \
-    && apt-get install -y nodejs
+    && curl -sL https://deb.nodesource.com/setup_10.x | bash - \
+#    && curl -sL https://deb.nodesource.com/setup_12.x | bash - \
+    && apt-get install -y nodejs\
 
 # Configure PHP extensions
 RUN docker-php-ext-configure intl \
