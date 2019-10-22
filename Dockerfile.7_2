@@ -122,8 +122,9 @@ RUN sed -i 's,^\(MinProtocol[ ]*=\).*,\1'TLSv1.0',g' /etc/ssl/openssl.cnf \
   && sed -i 's,^\(CipherString[ ]*=\).*,\1'DEFAULT@SECLEVEL=1',g' /etc/ssl/openssl.cnf
 
 # Install micro text editor
-RUN curl https://getmic.ro | bash \
-  && ln -s ./micro /usr/local/bin/micro
+RUN mkdir -p /micro && cd /micro \
+  && curl https://getmic.ro | bash \
+  && ln -s /micro/micro /usr/local/bin/micro
 
 USER www-data
 
