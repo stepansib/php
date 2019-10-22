@@ -123,7 +123,7 @@ RUN sed -i 's,^\(MinProtocol[ ]*=\).*,\1'TLSv1.0',g' /etc/ssl/openssl.cnf \
 
 # Install micro text editor
 RUN curl https://getmic.ro | bash \
-  && ln -s /var/www/backend/micro /usr/local/bin/micro
+  && ln -s ./micro /usr/local/bin/micro
 
 USER www-data
 
