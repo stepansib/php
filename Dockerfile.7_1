@@ -74,9 +74,9 @@ RUN docker-php-ext-install \
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Install PHPUnit
-RUN wget https://phar.phpunit.de/phpunit.phar \
-  && chmod +x phpunit.phar \
-  && mv phpunit.phar /usr/local/bin/phpunit
+RUN wget https://phar.phpunit.de/phpunit-5.2.1.phar \
+  && chmod +x phpunit-5.2.1.phar \
+  && mv phpunit-5.2.1.phar /usr/local/bin/phpunit
 
 # Install Codeception
 RUN curl -LsS https://codeception.com/codecept.phar -o /usr/local/bin/codecept \
