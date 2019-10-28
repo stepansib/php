@@ -123,7 +123,7 @@ RUN sed -i 's,^\(MinProtocol[ ]*=\).*,\1'TLSv1.0',g' /etc/ssl/openssl.cnf \
 
 # install MongoDB extension
 RUN pecl install mongodb
-RUN echo "extension=mongodb.so" > $PHP_INI_DIR/conf.d/mongodb.ini 
+RUN echo "extension=mongodb.so" > $PHP_INI_DIR/conf.d/mongodb.ini
 
 # Install micro text editor
 RUN mkdir -p /micro && cd /micro \
