@@ -40,14 +40,23 @@ RUN apt-get update && ACCEPT_EULA=Y apt-get install -y --no-install-recommends \
   build-essential \
   openssh-client \
   openssl \
-  libzip-dev
+  libzip-dev\
+  libc-client-dev \
+  libkrb5-dev
 
 # Install node
 RUN apt-get update \
-    && apt-get upgrade -y \
-    && curl -sL https://deb.nodesource.com/setup_10.x | bash - \
-#    && curl -sL https://deb.nodesource.com/setup_12.x | bash - \
-    && apt-get install -y nodejs
+  && apt-get upgrade -y \
+  && curl -sL https://deb.nodesource.com/setup_10.x | bash - \
+  && apt-get install -y nodejs
+
+# Install and configure PHP IMAP extension
+RUN docker-php-ext-configure imap --with-imap --with-imap-ssl --with-kerberos
+RUN docker-php-ext-install imap
+
+# Install and configure PHP Mailparse extension
+RUN pecl install mailparse \
+  && docker-php-ext-enable mailparse
 
 # Install PHP mcrypt extension
 RUN pecl install mcrypt-1.0.2
