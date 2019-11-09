@@ -15,7 +15,7 @@ stages:
 7.1 (latest) Build and push:
     stage: Build and push
     script:
-        - docker build -f Dockerfile.7_1 --build-arg BUILD_IMAGE=php:7.1-fpm -t $RELEASE_IMAGE:7.1 .
+        - docker build -f Dockerfile.7_1 --build-arg BUILD_IMAGE=php:7.1-fpm --build-arg PHP_EXTRA_CONFIGURE_ARGS="--enable-mailparse" -t $RELEASE_IMAGE:7.1 .
         - docker push $RELEASE_IMAGE:7.1
         - docker tag $RELEASE_IMAGE:7.1 $RELEASE_IMAGE:latest
         - docker push $RELEASE_IMAGE:latest
@@ -25,7 +25,7 @@ stages:
 7.2 Build and push:
     stage: Build and push
     script:
-        - docker build -f Dockerfile.7_2 --build-arg BUILD_IMAGE=php:7.2-fpm -t $RELEASE_IMAGE:7.2 .
+        - docker build -f Dockerfile.7_2 --build-arg BUILD_IMAGE=php:7.2-fpm --build-arg PHP_EXTRA_CONFIGURE_ARGS="--enable-mailparse" -t $RELEASE_IMAGE:7.2 .
         - docker push $RELEASE_IMAGE:7.2
     tags:
         - docker-in-docker
