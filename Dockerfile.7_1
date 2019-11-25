@@ -78,7 +78,8 @@ RUN docker-php-ext-install \
   zip \
   tidy \
   bcmath \
-  mcrypt
+  mcrypt \
+  sockets
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
