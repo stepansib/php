@@ -12,6 +12,14 @@ services:
 stages:
     - Build and push
 
+5.6 Build and push:
+    stage: Build and push
+    script:
+        - docker build -f Dockerfile.5_6 --build-arg BUILD_IMAGE=php:5.6-fpm -t $RELEASE_IMAGE:5.6 .
+        - docker push $RELEASE_IMAGE:5.6
+    tags:
+        - docker-in-docker
+
 7.1 (latest) Build and push:
     stage: Build and push
     script:
