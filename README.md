@@ -1,3 +1,3 @@
 # PHP
 
-Сборка PHP для CRM
+Docker php container

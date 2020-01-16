@@ -1,4 +1,4 @@
-FROM php:7.1-fpm
+FROM php:7.3-fpm
 MAINTAINER Stepan Yudin <stepan.sib@gmail.com>
 
 ENV APP_TIMEZONE=Europe/Moscow
@@ -39,7 +39,7 @@ RUN apt-get update && ACCEPT_EULA=Y apt-get install -y --no-install-recommends \
   build-essential \
   openssh-client \
   openssl \
-  libzip-dev \
+  libzip-dev\
   libc-client-dev \
   libkrb5-dev
 
@@ -56,6 +56,10 @@ RUN docker-php-ext-install imap
 # Install and configure PHP Mailparse extension
 RUN pecl install mailparse \
   && docker-php-ext-enable mailparse
+
+# Install PHP mcrypt extension
+RUN pecl install mcrypt-1.0.2
+RUN docker-php-ext-enable mcrypt
 
 # Configure PHP extensions
 RUN docker-php-ext-configure intl \
@@ -77,7 +81,6 @@ RUN docker-php-ext-install \
   zip \
   tidy \
   bcmath \
-  mcrypt \
   sockets
 
 # Install Composer

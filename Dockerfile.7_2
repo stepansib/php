@@ -1,5 +1,4 @@
-ARG BUILD_IMAGE=''
-FROM $BUILD_IMAGE
+FROM php:7.2-fpm
 MAINTAINER Stepan Yudin <stepan.sib@gmail.com>
 
 ENV APP_TIMEZONE=Europe/Moscow
@@ -122,6 +121,7 @@ RUN usermod -a -G sudo www-data \
   && chmod -R g+w /var/www \
   && mkdir -p $APP_DIR \
   && chown -R www-data:www-data $APP_DIR
+RUN sudo usermod -u 1000 www-data
 
 # Install PHP MSSQL extension
 RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
