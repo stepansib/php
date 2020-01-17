@@ -1,3 +1,3 @@
 # PHP
 
-Docker php container
+PHP container
