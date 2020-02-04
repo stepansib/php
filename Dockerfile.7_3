@@ -88,7 +88,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 # Install Symfony
 RUN wget https://get.symfony.com/cli/installer -O - | bash
-RUN mv /var/www/.symfony/bin/symfony /usr/local/bin/symfony
+RUN mv "$HOME"/.symfony/bin/symfony /usr/local/bin/symfony
 
 # Initialize GIT
 RUN git config --global user.email "www-data@stepansib.php"
