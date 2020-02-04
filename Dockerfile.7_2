@@ -86,6 +86,14 @@ RUN docker-php-ext-install \
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+# Install Symfony
+RUN wget https://get.symfony.com/cli/installer -O - | bash
+RUN mv /var/www/.symfony/bin/symfony /usr/local/bin/symfony
+
+# Initialize GIT
+RUN git config --global user.email "www-data@stepansib.php"
+RUN git config --global user.name "www-data"
+
 # Install PHPUnit
 RUN wget https://phar.phpunit.de/phpunit-5.2.1.phar \
   && chmod +x phpunit-5.2.1.phar \
