@@ -41,7 +41,8 @@ RUN apt-get update && ACCEPT_EULA=Y apt-get install -y --no-install-recommends \
   openssl \
   libzip-dev\
   libc-client-dev \
-  libkrb5-dev
+  libkrb5-dev \
+  libldb-dev
 
 # Install node
 RUN apt-get update \
@@ -50,7 +51,7 @@ RUN apt-get update \
   && apt-get install -y nodejs
 
 # Install and configure PHP IMAP extension
-RUN docker-php-ext-configure imap --with-imap --with-imap-ssl --with-kerberos
+RUN PHP_OPENSSL=yes docker-php-ext-configure imap --with-imap --with-imap-ssl --with-kerberos
 RUN docker-php-ext-install imap
 
 # Install and configure PHP Mailparse extension
